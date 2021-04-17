@@ -1,72 +1,131 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:lib_search_app/main.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lib_search_app/network/search_book_repository.dart';
 import 'package:lib_search_app/ui/search_book/search_book_view_model.dart';
-import 'package:provider/provider.dart';
 
-class SearchBookPage extends StatelessWidget {
+class SearchBookView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        // Injects SearchBookViewModel into this widgets.
-        ChangeNotifierProvider(create: (_) => SearchBookViewModel()),
-      ],
-      child: Scaffold(
-        appBar: AppBar(title: Text("書籍検索")),
-        body: _SearchBookPageBody(),
+    return MaterialApp(
+      theme: ThemeData(primaryColor: Colors.white),
+      home: BookList(),
+    );
+  }
+}
+
+class BookList extends HookWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Search Book'),
       ),
+      body: _textFieldView(),
     );
   }
-}
 
-class _SearchBookPageBody extends StatefulWidget {
-  @override
-  __SearchBookPageBodyState createState() => __SearchBookPageBodyState();
-}
-
-class __SearchBookPageBodyState extends State<_SearchBookPageBody> {
-  @override
-  void initState() {
-    super.initState();
-
-    // Listen events by view model.
-    var viewModel = Provider.of<SearchBookViewModel>(context, listen: false);
-    viewModel.searchSuccessAction.stream.listen((_) {
-      Navigator.of(context).pushReplacementNamed("/home");
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: _SearchButton(),
+  Widget _textFieldView() {
+    final context = useContext();
+    return Column(
+      children: [
+        Padding(
+          padding:
+          const EdgeInsets.only(top: 16, right: 16, bottom: 0, left: 16),
+          child: TextField(
+            // controller: searchTextField,
+            decoration: const InputDecoration(hintText: '検索キーワードを入力してください'),
+            autofocus: true,
+            onSubmitted: (searchKeyword) => _submission(searchKeyword, context),
+          ),
+        ),
+        // Expanded(
+        //   child: _buildList(),
+        // ),
+      ],
     );
   }
-}
 
-class _SearchButton extends StatelessWidget {
-  String _getButtonText(SearchBookViewModel vm) =>
-      vm.isLogging ? "Wait..." : "Login";
-
-  VoidCallback _onPressed(SearchBookViewModel vm) {
-    if (vm.isLogging) {
-      // When returning null, the button become disabled.
-      return null;
-    } else {
-      return () {
-        vm.search();
-      };
-    }
+  void _submission(String searchKeyword, BuildContext context) {
+    print('きたよ');
+    // context.read(searchBookRepositoryProvider).searchBook
+    // context.read(searchBookViewModelProvider).
+    context.read(searchBookViewModelProvider)
+        .searchBookRequest(searchKeyword);
+    //     .read(searchBookViewModelProvider)
+    //     .searchBook(searchKeywoasap
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<SearchBookViewModel>(
-      builder: (context, viewModel, _) {
-        return RaisedButton(
-          child: Text(_getButtonText(viewModel)),
-          onPressed: _onPressed(viewModel),
-        );
-      },
-    );
-  }
+
+  // Widget _buildList() {
+
+    // return searchBookState.when
+    // return repositoryListState.when(
+    //   data: (repositoryList) => repositoryList.isNotEmpty
+    //       ? ListView.builder(
+    //     padding: const EdgeInsets.all(16),
+    //     itemCount: repositoryList.length,
+    //     itemBuilder: (BuildContext context, int index) {
+    //       return _repositoryTile(repositoryList[index]);
+    //     },
+    //   )
+    //       : _emptyListView(),
+    //   loading: _loadingView,
+    //   error: (error, _) => _errorView(error.toString()),
+    // );
+  // }
+
+  // Widget _loadingView() {
+  //   return const Center(
+  //     child: CircularProgressIndicator(),
+  //   );
+  // }
+  //
+  // Widget _errorView(String errorMessage) {
+  //   Fluttertoast.showToast(
+  //     msg: errorMessage,
+  //     backgroundColor: Colors.grey,
+  //   );
+  //   return Container();
+  // }
+
+  // Widget _emptyListView() {
+  //   return const Center(
+  //     child: Text(
+  //       'Repositoryが見つかりませんでした',
+  //       style: TextStyle(
+  //         color: Colors.black54,
+  //         fontSize: 16,
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Widget _repositoryTile(RepositoryEntity repository) {
+  //   return Container(
+  //     decoration: const BoxDecoration(
+  //       border: Border(bottom: BorderSide(width: 1, color: Colors.grey)),
+  //     ),
+  //     child: ListTile(
+  //       leading: Image.network(repository.owner.avatarUrl),
+  //       title: Text(
+  //         repository.fullName,
+  //         style: const TextStyle(
+  //           color: Colors.black,
+  //           fontSize: 16,
+  //         ),
+  //       ),
+  //       subtitle: Text(
+  //         '★${repository.stargazersCount.toString()}',
+  //         maxLines: 1,
+  //         style: const TextStyle(
+  //           color: Colors.grey,
+  //           fontSize: 16,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
