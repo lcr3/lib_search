@@ -17,7 +17,7 @@ class SearchBookRepositoryImpl implements SearchBookRepository {
   @override
   Future<List<Item>> searchBook(
       String searchKeyword) async {
-    final responseBody = await _apiClient.get('');
+    final responseBody = await _apiClient.get(searchKeyword);
     final jsonBody = json.decode(responseBody) as Map<String, dynamic>;
     final jsonList = (jsonBody['Items'] as List).cast<Map<String, dynamic>>();
     final list = jsonList.map(Item.fromCustomJson);
