@@ -1,42 +1,32 @@
-import 'dart:async';
-import 'package:flutter/material.dart';
 
-enum UiState {
-  Idle,
-  Loading,
-  Loaded,
-}
+import 'package:flutter/cupertino.dart';
+import 'package:lib_search_app/network/entity/item.dart';
+import 'package:lib_search_app/network/search_book_repository.dart';
 
 class SearchBookViewModel extends ChangeNotifier {
-  // _はprivateを意味する
+  var searchResultList = <Item>[];
 
-  // stateを管理
-  var _uiState = UiState.Idle;
-  // トリガー？
-  var _searchSuccessAction = StreamController<Event>();
-
-  bool get isLogging => _uiState == UiState.Loading;
-
-  StreamController<Event> get searchSuccessAction => _searchSuccessAction;
-
-
-  void search() {
-    notifyListeners();
-
-    Future.delayed(Duration(milliseconds: 1500)).then((_) {
-      // Login Success!
-      _uiState = UiState.Loaded;
-      notifyListeners();
-
-      _searchSuccessAction.sink.add(Event());
-    });
+  SearchBookViewModel(this._searchBookRepository) {
+    searchBookRequest('レガシーコードからの脱却');
   }
 
-  @override
-  void dispose() {
-    _searchSuccessAction.close();
-    super.dispose();
+  final SearchBookRepository _searchBookRepository;
+
+  Future<void> searchBookRequest(String searchKeyword) async {
+    if (searchKeyword.isEmpty) {
+      print('search keyword is null');
+      return;
+    }
+
+    try {
+      final repositoryList =
+        await _searchBookRepository.searchBook(searchKeyword);
+      searchResultList = repositoryList;
+    } on Exception catch (error) {
+      print('request error');
+      searchResultList = [];
+      // state = AsyncValue.error(error);
+    }
+    notifyListeners();
   }
 }
-
-class Event {}
