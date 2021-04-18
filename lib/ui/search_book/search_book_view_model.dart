@@ -1,13 +1,12 @@
 
-import 'package:hooks_riverpod/all.dart';
-import 'package:lib_search_app/network/response/item_state.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:lib_search_app/network/entity/item.dart';
 import 'package:lib_search_app/network/search_book_repository.dart';
 
+class SearchBookViewModel extends ChangeNotifier {
+  var searchResultList = <Item>[];
 
-
-class SearchBookViewModel extends StateNotifier<AsyncValue<ItemState>> {
-  SearchBookViewModel(this._searchBookRepository)
-      : super(const AsyncValue.loading()) {
+  SearchBookViewModel(this._searchBookRepository) {
     searchBookRequest('レガシーコードからの脱却');
   }
 
@@ -19,17 +18,15 @@ class SearchBookViewModel extends StateNotifier<AsyncValue<ItemState>> {
       return;
     }
 
-    state = const AsyncValue.loading();
     try {
       final repositoryList =
         await _searchBookRepository.searchBook(searchKeyword);
-      state = AsyncValue.data(repositoryList);
+      searchResultList = repositoryList;
     } on Exception catch (error) {
-      state = AsyncValue.error(error);
+      print('request error');
+      searchResultList = [];
+      // state = AsyncValue.error(error);
     }
-  }
-
-  void asapasap() {
-
+    notifyListeners();
   }
 }

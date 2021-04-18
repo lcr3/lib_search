@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:lib_search_app/network/response/item.dart';
-import 'package:lib_search_app/network/response/item_state.dart';
 import 'package:lib_search_app/network/search_book_api_client.dart';
 
+import 'entity/item.dart';
 
+// ignore: one_member_abstracts
 abstract class SearchBookRepository {
-  Future<ItemState> searchBook(String searchKeyword);
+  Future<List<Item>> searchBook(String searchKeyword);
 }
 
 class SearchBookRepositoryImpl implements SearchBookRepository {
@@ -15,18 +15,15 @@ class SearchBookRepositoryImpl implements SearchBookRepository {
   final SearchBookApiClient _apiClient;
 
   @override
-  Future<ItemState> searchBook(
+  Future<List<Item>> searchBook(
       String searchKeyword) async {
     final responseBody = await _apiClient.get('');
     final jsonBody = json.decode(responseBody) as Map<String, dynamic>;
     final jsonList = (jsonBody['Items'] as List).cast<Map<String, dynamic>>();
     final list = jsonList.map(Item.fromCustomJson);
-    return ItemState(items: list.toList());
-
-    // for (final itemJson in decodedJson['items']) {
-    //   repositoryList
-    //       .add(RepositoryEntity.fromJson(itemJson as Map<String, dynamic>));
-    // }
-    // return repositoryList;
+    var repositoryList = <Item>[];
+    // ignore: join_return_with_assignment
+    repositoryList = list.toList();
+    return repositoryList;
   }
 }

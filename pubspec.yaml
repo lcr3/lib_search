@@ -24,20 +24,23 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_hooks: '>=0.16.0'
-  freezed_annotation:
-  hooks_riverpod: ^0.14.0
   http:
-  simple_logger:
+#  hooks_riverpod:
+  provider:
   state_notifier:
-  cupertino_icons: ^1.0.2
+  freezed_annotation:
+  fluttertoast:
+  cupertino_icons: ^1.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  pedantic_mono: any
   build_runner:
-  freezed: '>=0.13.0'
+  freezed:
   json_serializable:
-  pedantic_mono:
+  mockito:
+  mock_web_server:
+
 flutter:
   uses-material-design: true
