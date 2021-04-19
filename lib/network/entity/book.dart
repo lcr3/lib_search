@@ -1,22 +1,21 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:flutter/foundation.dart';
 
-part 'item.freezed.dart';
-part 'item.g.dart';
+part 'book.freezed.dart';
+part 'book.g.dart';
 
 @freezed
-abstract class Item with _$Item {
-  factory Item({
+abstract class Book with _$Book {
+  factory Book({
     required String title,
     required String author,
     required String isbn,
     required String largeImageUrl,
-  }) = _Item;
-  // Item._();
+  }) = _Book;
 
-  factory Item.fromJson(Map<String, dynamic> json) => _$ItemFromJson(json);
+  factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);
 
-  static Item fromCustomJson(Map<String, dynamic> json) => Item(
+  // ignore: prefer_constructors_over_static_methods
+  static Book fromCustomJson(Map<String, dynamic> json) => Book(
       title: json['Item']['title'] as String,
       author: json['Item']['author'] as String,
       isbn: json['Item']['isbn'] as String,

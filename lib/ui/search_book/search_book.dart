@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lib_search_app/network/entity/item.dart';
+import 'package:lib_search_app/network/entity/book.dart';
 import 'package:lib_search_app/network/search_book_api_client.dart';
 import 'package:lib_search_app/network/search_book_repository.dart';
 import 'package:lib_search_app/ui/search_book/search_book_view_model.dart';
@@ -94,35 +94,37 @@ class BookList extends StatelessWidget {
       create: (_) => SearchBookViewModel(repo),
       child: Consumer<SearchBookViewModel>(
           builder: (context, model, child) => Scaffold(
-              appBar: AppBar(
-                title: Text('Search Book'),
-              ),
-              body: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                      padding:
-                      const EdgeInsets.only(top: 16, right: 16, bottom: 0, left: 16),
-                      child: TextField(
-                        decoration: const InputDecoration(hintText: '検索キーワードを入力してください'),
-                        autofocus: true,
-                        onSubmitted: (searchKeyword) => model.searchBookRequest(searchKeyword),
-                      ),
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                          itemCount: model.searchResultList.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return BookTile(item: model.searchResultList[index]);
-                          }
-                      ),
-                    ),
-                    // CountText(),
-                  ],
+                appBar: AppBar(
+                  title: const Text('Search Book'),
                 ),
-              ),
-          )
+                body: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 16, right: 16, bottom: 0, left: 16),
+                        child: TextField(
+                          decoration: const InputDecoration(
+                              hintText: '検索キーワードを入力してください'),
+                          autofocus: true,
+                          onSubmitted: (searchKeyword) =>
+                              model.searchBookRequest(searchKeyword),
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                            itemCount: model.searchResultList.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return BookTile(
+                                  book: model.searchResultList[index]);
+                            }),
+                      ),
+                      // CountText(),
+                    ],
+                  ),
+                ),
+              )
       ),
     );
   }
@@ -206,8 +208,8 @@ class BookList extends StatelessWidget {
 //
 
 class BookTile extends StatelessWidget {
-  const BookTile({required this.item}) : super();
-  final Item item;
+  const BookTile({required this.book}) : super();
+  final Book book;
 
   @override
   Widget build(BuildContext context) {
@@ -216,16 +218,16 @@ class BookTile extends StatelessWidget {
         border: Border(bottom: BorderSide(width: 1, color: Colors.grey)),
       ),
       child: ListTile(
-        leading: Image.network(item.largeImageUrl),
+        leading: Image.network(book.largeImageUrl),
         title: Text(
-          item.title,
+          book.title,
           style: const TextStyle(
             color: Colors.black,
             fontSize: 16,
           ),
         ),
         subtitle: Text(
-          item.author,
+          book.author,
           maxLines: 1,
           style: const TextStyle(
             color: Colors.grey,

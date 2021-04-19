@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:lib_search_app/network/entity/item.dart';
+import 'package:lib_search_app/network/entity/book.dart';
 import 'package:lib_search_app/network/search_book_repository.dart';
 
 class SearchBookViewModel extends ChangeNotifier {
@@ -8,7 +8,7 @@ class SearchBookViewModel extends ChangeNotifier {
   }
 
   final SearchBookRepository _searchBookRepository;
-  List<Item> searchResultList = <Item>[];
+  List<Book> searchResultList = <Book>[];
 
   Future<void> searchBookRequest(String searchKeyword) async {
     try {
