@@ -25,7 +25,6 @@ dependencies:
   flutter:
     sdk: flutter
   http:
-#  hooks_riverpod:
   provider:
   state_notifier:
   freezed_annotation:
