@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'item.dart';
+part of 'book.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Item _$_$_ItemFromJson(Map<String, dynamic> json) {
-  return _$_Item(
+_$_Book _$_$_BookFromJson(Map<String, dynamic> json) {
+  return _$_Book(
     title: json['title'] as String,
     author: json['author'] as String,
     isbn: json['isbn'] as String,
@@ -15,7 +15,7 @@ _$_Item _$_$_ItemFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_ItemToJson(_$_Item instance) => <String, dynamic>{
+Map<String, dynamic> _$_$_BookToJson(_$_Book instance) => <String, dynamic>{
       'title': instance.title,
       'author': instance.author,
       'isbn': instance.isbn,

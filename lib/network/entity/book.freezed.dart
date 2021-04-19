@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'item.dart';
+part of 'book.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -12,20 +12,20 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Item _$ItemFromJson(Map<String, dynamic> json) {
-  return _Item.fromJson(json);
+Book _$BookFromJson(Map<String, dynamic> json) {
+  return _Book.fromJson(json);
 }
 
 /// @nodoc
-class _$ItemTearOff {
-  const _$ItemTearOff();
+class _$BookTearOff {
+  const _$BookTearOff();
 
-  _Item call(
+  _Book call(
       {required String title,
       required String author,
       required String isbn,
       required String largeImageUrl}) {
-    return _Item(
+    return _Book(
       title: title,
       author: author,
       isbn: isbn,
@@ -33,16 +33,16 @@ class _$ItemTearOff {
     );
   }
 
-  Item fromJson(Map<String, Object> json) {
-    return Item.fromJson(json);
+  Book fromJson(Map<String, Object> json) {
+    return Book.fromJson(json);
   }
 }
 
 /// @nodoc
-const $Item = _$ItemTearOff();
+const $Book = _$BookTearOff();
 
 /// @nodoc
-mixin _$Item {
+mixin _$Book {
   String get title => throw _privateConstructorUsedError;
   String get author => throw _privateConstructorUsedError;
   String get isbn => throw _privateConstructorUsedError;
@@ -50,23 +50,23 @@ mixin _$Item {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ItemCopyWith<Item> get copyWith => throw _privateConstructorUsedError;
+  $BookCopyWith<Book> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ItemCopyWith<$Res> {
-  factory $ItemCopyWith(Item value, $Res Function(Item) then) =
-      _$ItemCopyWithImpl<$Res>;
+abstract class $BookCopyWith<$Res> {
+  factory $BookCopyWith(Book value, $Res Function(Book) then) =
+      _$BookCopyWithImpl<$Res>;
   $Res call({String title, String author, String isbn, String largeImageUrl});
 }
 
 /// @nodoc
-class _$ItemCopyWithImpl<$Res> implements $ItemCopyWith<$Res> {
-  _$ItemCopyWithImpl(this._value, this._then);
+class _$BookCopyWithImpl<$Res> implements $BookCopyWith<$Res> {
+  _$BookCopyWithImpl(this._value, this._then);
 
-  final Item _value;
+  final Book _value;
   // ignore: unused_field
-  final $Res Function(Item) _then;
+  final $Res Function(Book) _then;
 
   @override
   $Res call({
@@ -97,21 +97,21 @@ class _$ItemCopyWithImpl<$Res> implements $ItemCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ItemCopyWith<$Res> implements $ItemCopyWith<$Res> {
-  factory _$ItemCopyWith(_Item value, $Res Function(_Item) then) =
-      __$ItemCopyWithImpl<$Res>;
+abstract class _$BookCopyWith<$Res> implements $BookCopyWith<$Res> {
+  factory _$BookCopyWith(_Book value, $Res Function(_Book) then) =
+      __$BookCopyWithImpl<$Res>;
   @override
   $Res call({String title, String author, String isbn, String largeImageUrl});
 }
 
 /// @nodoc
-class __$ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res>
-    implements _$ItemCopyWith<$Res> {
-  __$ItemCopyWithImpl(_Item _value, $Res Function(_Item) _then)
-      : super(_value, (v) => _then(v as _Item));
+class __$BookCopyWithImpl<$Res> extends _$BookCopyWithImpl<$Res>
+    implements _$BookCopyWith<$Res> {
+  __$BookCopyWithImpl(_Book _value, $Res Function(_Book) _then)
+      : super(_value, (v) => _then(v as _Book));
 
   @override
-  _Item get _value => super._value as _Item;
+  _Book get _value => super._value as _Book;
 
   @override
   $Res call({
@@ -120,7 +120,7 @@ class __$ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res>
     Object? isbn = freezed,
     Object? largeImageUrl = freezed,
   }) {
-    return _then(_Item(
+    return _then(_Book(
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -144,15 +144,15 @@ class __$ItemCopyWithImpl<$Res> extends _$ItemCopyWithImpl<$Res>
 @JsonSerializable()
 
 /// @nodoc
-class _$_Item with DiagnosticableTreeMixin implements _Item {
-  _$_Item(
+class _$_Book implements _Book {
+  _$_Book(
       {required this.title,
       required this.author,
       required this.isbn,
       required this.largeImageUrl});
 
-  factory _$_Item.fromJson(Map<String, dynamic> json) =>
-      _$_$_ItemFromJson(json);
+  factory _$_Book.fromJson(Map<String, dynamic> json) =>
+      _$_$_BookFromJson(json);
 
   @override
   final String title;
@@ -164,25 +164,14 @@ class _$_Item with DiagnosticableTreeMixin implements _Item {
   final String largeImageUrl;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Item(title: $title, author: $author, isbn: $isbn, largeImageUrl: $largeImageUrl)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'Item'))
-      ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('author', author))
-      ..add(DiagnosticsProperty('isbn', isbn))
-      ..add(DiagnosticsProperty('largeImageUrl', largeImageUrl));
+  String toString() {
+    return 'Book(title: $title, author: $author, isbn: $isbn, largeImageUrl: $largeImageUrl)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Item &&
+        (other is _Book &&
             (identical(other.title, title) ||
                 const DeepCollectionEquality().equals(other.title, title)) &&
             (identical(other.author, author) ||
@@ -204,23 +193,23 @@ class _$_Item with DiagnosticableTreeMixin implements _Item {
 
   @JsonKey(ignore: true)
   @override
-  _$ItemCopyWith<_Item> get copyWith =>
-      __$ItemCopyWithImpl<_Item>(this, _$identity);
+  _$BookCopyWith<_Book> get copyWith =>
+      __$BookCopyWithImpl<_Book>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_ItemToJson(this);
+    return _$_$_BookToJson(this);
   }
 }
 
-abstract class _Item implements Item {
-  factory _Item(
+abstract class _Book implements Book {
+  factory _Book(
       {required String title,
       required String author,
       required String isbn,
-      required String largeImageUrl}) = _$_Item;
+      required String largeImageUrl}) = _$_Book;
 
-  factory _Item.fromJson(Map<String, dynamic> json) = _$_Item.fromJson;
+  factory _Book.fromJson(Map<String, dynamic> json) = _$_Book.fromJson;
 
   @override
   String get title => throw _privateConstructorUsedError;
@@ -232,5 +221,5 @@ abstract class _Item implements Item {
   String get largeImageUrl => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ItemCopyWith<_Item> get copyWith => throw _privateConstructorUsedError;
+  _$BookCopyWith<_Book> get copyWith => throw _privateConstructorUsedError;
 }
