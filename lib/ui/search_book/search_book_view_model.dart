@@ -23,11 +23,13 @@ class SearchBookViewModel extends ChangeNotifier {
         await _searchBookRepository.searchBook(searchKeyword);
       isLoading = false;
       searchResultList = repositoryList;
-    } on Exception catch (error) {
+    } on FormatException catch(error) {
       print('request error');
       isLoading = false;
       this.error = error;
       searchResultList = [];
+    } on Exception catch (error) {
+      print('exception');
     }
     // 変更通知
     notifyListeners();

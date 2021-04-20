@@ -25,6 +25,8 @@ class SearchBookRepositoryImpl implements SearchBookRepository {
       final list = jsonList.map(Book.fromCustomJson);
       final repositoryList = list.toList();
       return repositoryList;
+    } on FormatException catch(error) {
+      return Future.error(error);
     } on Exception catch(error) {
       return Future.error(error);
     }
