@@ -26,7 +26,7 @@ void main() {
       final repository = SearchBookRepositoryImpl(client);
 
       // 実行
-      var result = await repository.searchBook('レガシーコード');
+      final result = await repository.searchBook('レガシーコード');
 
       // 検証
       expect(result, expactResponseBooks);
@@ -45,19 +45,21 @@ void main() {
       expect(second.largeImageUrl, expactResponseBooks[1].largeImageUrl);
     });
 
-  //   test('Faild repository.searchBook', () async {
-  //     // Mockレスポンスをセット
-  //     final expectError = Error();
-  //     when(client.get('レガシーコード')).thenAnswer((_) => Future.error(expectError));
+    test('Faild repository.searchBook', () async {
+      // Mockレスポンスをセット
+      const expectError = FormatException('request error');
+      when(client.get('レガシーコード')).thenAnswer((_) => Future.error(expectError));
 
-  //     // 検証クラスを初期化
-  //     final repository = SearchBookRepositoryImpl(client);
+      // 検証クラスを初期化
+      final repository = SearchBookRepositoryImpl(client);
 
-  //     // 実行
-  //     var result = await repository.searchBook('レガシーコード');
-
-  //     // 検証
-  //     expect(result, expectError);
-  //   });
-  // });
+      // 実行
+      try {
+        await repository.searchBook('レガシーコード');
+        fail('Unexpected');
+      } on FormatException catch(error) {
+        expect(error, expectError);
+      }
+    });
+  });
 }

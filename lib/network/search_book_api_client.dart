@@ -15,7 +15,7 @@ class SearchBookApiClientImpl implements SearchBookApiClient {
     try {
       final response = await http.get(url);
       if (response.statusCode != 200) {
-        return Future.error(Error());
+        throw const FormatException('network error');
       }
       print(response.body);
       return response.body;
