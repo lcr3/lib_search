@@ -7,25 +7,25 @@ abstract class SearchBookApiClient {
 }
 
 class SearchBookApiClientImpl implements SearchBookApiClient {
-  final base = 'https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404/';
+  final baseUrl = 'https://app.rakuten.co.jp/services/api/BooksBook/Search/20170404/';
 
   @override
   Future<String> get(String endpoint) async {
-    final url = createRequestUrl(endpoint);
+    final url = _createRequestUrl(endpoint);
     try {
       final response = await http.get(url);
       if (response.statusCode != 200) {
-        throw Exception('failed');
+        return Future.error(Error());
       }
       print(response.body);
       return response.body;
-    } on SocketException {
-      throw Exception('No Internet connection');
+    } on Exception catch(e) {
+      return Future.error(e);
     }
   }
 
-  Uri createRequestUrl(String searchText) {
-    var uri = '$base?applicationId=1032630259901986279';
+  Uri _createRequestUrl(String searchText) {
+    var uri = '$baseUrl?applicationId=1032630259901986279';
     if (searchText.isNotEmpty) {
         uri += '&title=$searchText';
     }
