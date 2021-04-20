@@ -23,7 +23,6 @@ class SearchBookViewModel extends ChangeNotifier {
         await _searchBookRepository.searchBook(searchKeyword);
       isLoading = false;
       searchResultList = repositoryList;
-      print('modelは$searchResultList');
     } on Exception catch (error) {
       print('request error');
       isLoading = false;

@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:lib_search_app/network/search_book_api_client.dart';
 
 import 'entity/book.dart';
@@ -15,15 +17,16 @@ class SearchBookRepositoryImpl implements SearchBookRepository {
   final SearchBookApiClient _apiClient;
 
   @override
-  Future<List<Book>> searchBook(
-      String searchKeyword) async {
-    final responseBody = await _apiClient.get(searchKeyword);
-    final jsonBody = json.decode(responseBody) as Map<String, dynamic>;
-    final jsonList = (jsonBody['Items'] as List).cast<Map<String, dynamic>>();
-    final list = jsonList.map(Book.fromCustomJson);
-    var repositoryList = <Book>[];
-    // ignore: join_return_with_assignment
-    repositoryList = list.toList();
-    return repositoryList;
+  Future<List<Book>> searchBook(String searchKeyword) async {
+    try {
+      final responseBody = await _apiClient.get(searchKeyword);
+      final jsonBody = json.decode(responseBody) as Map<String, dynamic>;
+      final jsonList = (jsonBody['Items'] as List).cast<Map<String, dynamic>>();
+      final list = jsonList.map(Book.fromCustomJson);
+      final repositoryList = list.toList();
+      return repositoryList;
+    } on Exception catch(error) {
+      return Future.error(error);
+    }
   }
 }
