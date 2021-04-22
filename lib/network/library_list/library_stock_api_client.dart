@@ -1,18 +1,12 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
-import 'package:lib_search_app/network/entity/library_list_response.dart';
+import 'package:lib_search_app/network/entity/library_stock_response.dart';
 
-abstract class LibraryListApiClient {
-  Future<LibraryListResponse> searchLibraryPauling(
-      String session, String isbn, List<String> libIds);
-}
-
-class LibraryListApiClientImpl implements LibraryListApiClient {
+class LibraryStockApiClient {
   final baseUrl = 'https://api.calil.jp/check?';
 
   @override
-  Future<LibraryListResponse> searchLibraryPauling(String session, String isbn, List<String> libIds) async {
+  Future<LibraryListResponse> searchStockPauling(String session, String isbn, List<String> libIds) async {
     final libId = libIds.join(',');
     final url = _createRequestUri(isbn, libId);
     try {
