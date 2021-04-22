@@ -8,7 +8,7 @@ class LibraryStockApiClient {
   @override
   Future<LibraryListResponse> searchStockPauling(String session, String isbn, List<String> libIds) async {
     final libId = libIds.join(',');
-    final url = _createRequestUri(isbn, libId);
+    final url = _createRequestUri(session, isbn, libId);
     try {
       final response =
           await http.get(url, headers: {'Content-Type': 'application/json'});
@@ -24,12 +24,16 @@ class LibraryStockApiClient {
     }
   }
 
-  Uri _createRequestUri(String isbn, String libIds) {
+  Uri _createRequestUri(String session, String isbn, String libIds) {
     var params = 'appkey=ee9d6e54dd4601e91d0d962975ff704d';
     params += '&isbn=$isbn';
     params += '&systemid=$libIds';
     params += '&format=json';
     params += '&callback=no';
+    if (session.isNotEmpty) {
+      print('sessionあるよ');
+      params += '&session=$session';
+    }
     return Uri.parse(baseUrl + params);
   }
 }

@@ -29,6 +29,7 @@ dependencies:
   state_notifier:
   freezed_annotation:
   fluttertoast:
+  shared_preferences:
   cupertino_icons: ^1.0.0
 
 dev_dependencies:
