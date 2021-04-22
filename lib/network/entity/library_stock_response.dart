@@ -8,7 +8,10 @@ class LibraryListResponse {
   LibraryListResponse(this.session, this._isContinue, this.state);
 
   bool isFinish() {
-    return _isContinue == 0 || true;
+    if (_isContinue == 0) {
+      return true;
+    }
+    return false;
   }
 
   static LibraryListResponse fromJson(Map<String, dynamic> json) {
