@@ -1,7 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:lib_search_app/network/search_book_api_client.dart';
 
 import 'entity/book.dart';
