@@ -5,7 +5,6 @@ import 'package:lib_search_app/network/entity/library_stock_response.dart';
 class LibraryStockApiClient {
   final baseUrl = 'https://api.calil.jp/check?';
 
-  @override
   Future<LibraryListResponse> searchStockPauling(String session, String isbn, List<String> libIds) async {
     final libId = libIds.join(',');
     final url = _createRequestUri(session, isbn, libId);
