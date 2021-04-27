@@ -30,6 +30,7 @@ dependencies:
   freezed_annotation:
   fluttertoast:
   shared_preferences:
+  google_maps_flutter:
   cupertino_icons: ^1.0.0
 
 dev_dependencies:

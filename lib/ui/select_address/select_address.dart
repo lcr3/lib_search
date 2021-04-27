@@ -1,64 +1,54 @@
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-//
-// class SelectAddressPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MultiProvider(
-//       providers: [
-//         // Injects SearchBookViewModel into this widgets.
-//         ChangeNotifierProvider(create: (_) => SelectAddressViewModel()),
-//       ],
-//       child: Scaffold(
-//         appBar: AppBar(title: Text("決めまっせ")),
-//         body: _SelectAddressPageBody(),
-//       ),
-//     );
-//   }
-// }
-//
-// class _SelectAddressPageBody extends StatefulWidget {
-//   @override
-//   __SelectAddressPageBodyState createState() => __SelectAddressPageBodyState();
-// }
-//
-// class __SelectAddressPageBodyState extends State<_SelectAddressPageBody> {
-//   @override
-//   void initState() {
-//     super.initState();
-//
-//     // Listen events by view model.
-//     var viewModel = Provider.of<SelectAddressViewModel>(context, listen: false);
-//     viewModel.selectAddressAction.stream.listen((event) {
-//       Navigator.of(context).pushReplacementNamed("/search_book");
-//     });
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//       child: _SelectAddressButton(),
-//     );
-//   }
-// }
-//
-// class _SelectAddressButton extends StatelessWidget {
-//
-//   VoidCallback _onPressed(SelectAddressViewModel vm) {
-//     return () {
-//       vm.selectAddress();
-//     };
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Consumer<SelectAddressViewModel>(
-//       builder: (context, viewModel, _) {
-//         return RaisedButton(
-//           child: Text("住所きめよ"),
-//           onPressed: _onPressed(viewModel),
-//         );
-//       },
-//     );
-//   }
-// }
+
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+class SelectAddressView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(primaryColor: Colors.white),
+      home: MapView(),
+    );
+  }
+}
+
+class MapView extends StatelessWidget {
+  Completer<GoogleMapController> _controller = Completer();
+
+  static const CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 14.4746,
+  );
+
+  static const CameraPosition _kLake = CameraPosition(
+      bearing: 192.8334901395799,
+      target: LatLng(37.43296265331129, -122.08832357078792),
+      tilt: 59.440717697143555,
+      zoom: 19.151926040649414
+  );
+
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GoogleMap(
+        mapType: MapType.hybrid,
+        initialCameraPosition: _kGooglePlex,
+        onMapCreated: (GoogleMapController controller) {
+          _controller.complete(controller);
+        },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _goToTheLake,
+        label: const Text('To the lake!'),
+        icon: const Icon(Icons.directions_boat),
+      ),
+    );
+  }
+
+  Future<void> _goToTheLake() async {
+    final controller = await _controller.future;
+    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+  }
+}
