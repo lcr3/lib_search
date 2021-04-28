@@ -1,9 +1,9 @@
-
 import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:lib_search_app/ui/select_address/select_address_view_model.dart';
+import 'package:provider/provider.dart';
 
 class SelectAddressView extends StatelessWidget {
   @override
@@ -16,39 +16,42 @@ class SelectAddressView extends StatelessWidget {
 }
 
 class MapView extends StatelessWidget {
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
 
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
-
-  static const CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414
-  );
-
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GoogleMap(
-        mapType: MapType.hybrid,
-        initialCameraPosition: _kGooglePlex,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _goToTheLake,
-        label: const Text('To the lake!'),
-        icon: const Icon(Icons.directions_boat),
-      ),
+    return ChangeNotifierProvider<SelectAddressViewModel>(
+      create: (_) => SelectAddressViewModel(),
+      child: Consumer<SelectAddressViewModel>(
+          builder: (context, model, child) => Scaffold(
+                appBar: AppBar(
+                  title: const Text('現在地を指定'),
+                ),
+                body: (model.currentLocation == null)
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Center(
+                        child: GoogleMap(
+                          mapType: MapType.hybrid,
+                          initialCameraPosition: CameraPosition(
+                            target: _getLocation(
+                                model.currentLocation?.latitude,
+                                model.currentLocation?.longitude),
+                            zoom: 18,
+                          ),
+                          onMapCreated: _controller.complete,
+                          myLocationEnabled: true,
+                        ),
+                      ),
+              )),
     );
   }
 
-  Future<void> _goToTheLake() async {
-    final controller = await _controller.future;
-    await controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
+  LatLng _getLocation(double? latitude, double? longitude) {
+    if (latitude == null || longitude == null) {
+      return const LatLng(35.6759323, 139.7450316);
+    }
+    return LatLng(latitude, longitude);
   }
 }

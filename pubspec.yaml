@@ -31,7 +31,8 @@ dependencies:
   fluttertoast:
   shared_preferences:
   google_maps_flutter:
-  cupertino_icons: ^1.0.0
+  location: ^4.0.0
+  cupertino_icons:
 
 dev_dependencies:
   flutter_test:
