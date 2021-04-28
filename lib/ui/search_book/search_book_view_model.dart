@@ -35,4 +35,3 @@ class SearchBookViewModel extends ChangeNotifier {
     notifyListeners();
   }
 }
-
