@@ -2,6 +2,9 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:lib_search_app/network/search_library/search_library_api_client.dart';
+import 'package:lib_search_app/network/search_library/search_library_repository.dart';
+import 'package:lib_search_app/ui/search_book/search_book.dart';
 import 'package:lib_search_app/ui/select_address/select_address_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +17,9 @@ class SelectAddressView extends StatelessWidget {
         accentColor: const Color.fromRGBO(21, 233, 171, 1),
       ),
       home: MapView(),
+      routes: <String, WidgetBuilder> {
+        '/search_book': (BuildContext context) => SearchBookView(),
+      },
     );
   }
 }
@@ -23,9 +29,12 @@ class MapView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
+    final searchLibraryRepository = SearchLibraryRepository(
+        SearchLibraryApiClient()
+    );
     return ChangeNotifierProvider<SelectAddressViewModel>(
-      create: (_) => SelectAddressViewModel(),
+      create: (_) => SelectAddressViewModel(searchLibraryRepository),
       child: Consumer<SelectAddressViewModel>(
           builder: (context, model, child) => Scaffold(
               appBar: AppBar(
@@ -71,7 +80,12 @@ class MapView extends StatelessWidget {
                                 ),
                                 shape: const StadiumBorder(),
                               ),
-                              onPressed: () {},
+                              onPressed: () async {
+                                final response = await model.selectAddress();
+                                if (response.result) {
+                                  await Navigator.of(context).pushReplacementNamed('/search_book');
+                                }
+                              },
                               child: const Text('現在位置を設定'),
                             ),
                           ),
