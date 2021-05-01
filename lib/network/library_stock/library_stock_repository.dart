@@ -3,7 +3,11 @@ import 'library_stock_api_client.dart';
 
 // ignore: one_member_abstracts
 abstract class LibraryStockUseCase {
-  Future<LibraryListResponse?> searchStock(String session, String isbn, List<String> libIds);
+  Future<LibraryStockResponse?> searchStock(
+      String session,
+      String isbn,
+      List<String> libIds
+      );
 }
 
 class LibraryStockRepository implements LibraryStockUseCase {
@@ -13,7 +17,7 @@ class LibraryStockRepository implements LibraryStockUseCase {
 
   @override
   // ignore: lines_longer_than_80_chars
-  Future<LibraryListResponse?> searchStock(String session,
+  Future<LibraryStockResponse?> searchStock(String session,
       String isbn,
       List<String> libIds) async {
     try {

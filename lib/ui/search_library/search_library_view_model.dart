@@ -20,10 +20,7 @@ class SearchLibraryViewModel extends ChangeNotifier {
         final libraryResponse =
         await _searchLibraryRepository.searchLibrary(latitude, longitude);
         libraries = libraryResponse;
-        var libIds = <String>[];
-        for (final lib in libraries) {
-          libIds.add(lib.libId);
-        }
+        final libIds = libraries.map((library) => library.libId).toList();
         await _libIdStore.store(libIds);
     } on FormatException catch(error) {
       print('request error');

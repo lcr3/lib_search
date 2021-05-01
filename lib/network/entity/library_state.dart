@@ -11,7 +11,7 @@ class LibraryState {
     final stateJson = json['libkey'] as Map<String, dynamic>?;
     final states = <State>[];
     if (stateJson != null) {
-      stateJson.forEach((key, value) {
+      stateJson.forEach((key, dynamic value) {
         states.add(State(key, value));
       });
     }
