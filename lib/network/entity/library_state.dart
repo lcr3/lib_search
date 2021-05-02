@@ -26,10 +26,13 @@ class LibraryState {
 class Reference {
   Reference(this.name, this.type);
 
+  Reference.fromJson(String name, dynamic type)
+      : this.name = name,
+        this.type = type as String;
   final String name;
   final String type;
 
-  Reference.fromJson(String name, dynamic type)
-  : this.name = name,
-    this.type = type as String;
+  String fullState(){
+    return '$name $type';
+  }
 }
