@@ -1,35 +1,35 @@
 
 class LibraryState {
-  LibraryState(this.name, this.reserveUrl, this.states);
+  LibraryState(this.name, this.reserveUrl, this.references);
 
   final String name;
   final String reserveUrl;
-  final List<State> states;
+  final List<Reference> references;
 
   // ignore: prefer_constructors_over_static_methods
   static LibraryState fromJson(String name, Map<String, dynamic> json) {
     final stateJson = json['libkey'] as Map<String, dynamic>?;
-    final states = <State>[];
+    final references = <Reference>[];
     if (stateJson != null) {
       stateJson.forEach((key, dynamic value) {
-        states.add(State(key, value));
+        references.add(Reference(key, value));
       });
     }
     return LibraryState(
       name,
       json['reserveurl'] as String,
-      states,
+      references,
     );
   }
 }
 
-class State {
-  State(this.name, this.type);
+class Reference {
+  Reference(this.name, this.type);
 
   final String name;
   final String type;
 
-  State.fromJson(String name, dynamic type)
+  Reference.fromJson(String name, dynamic type)
   : this.name = name,
     this.type = type as String;
 }

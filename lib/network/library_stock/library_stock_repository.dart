@@ -3,7 +3,7 @@ import 'library_stock_api_client.dart';
 
 // ignore: one_member_abstracts
 abstract class LibraryStockUseCase {
-  Future<LibraryStockResponse?> searchStock(
+  Future<LibraryStockResponse> searchStock(
       String session,
       String isbn,
       List<String> libIds
@@ -13,25 +13,26 @@ abstract class LibraryStockUseCase {
 class LibraryStockRepository implements LibraryStockUseCase {
   LibraryStockRepository(this._apiClient);
   final LibraryStockApiClient _apiClient;
-  static const _interval = 2;
 
   @override
-  // ignore: lines_longer_than_80_chars
-  Future<LibraryStockResponse?> searchStock(String session,
+  Future<LibraryStockResponse> searchStock(String session,
       String isbn,
       List<String> libIds) async {
     try {
       final response = await _apiClient.searchStockPauling(
-          session, isbn, libIds);
-      if (response.isFinish()) {
-        print('検索完了');
-        return response;
+          session,
+          isbn,
+          libIds
+      );
+      if (!response.isFinish()) {
+        // サーバー検索中
+        return LibraryStockResponse(
+            response.session,
+            1,
+            []
+        );
       }
-      print('検索続行');
-      // インターバルをおいて再度リクエスト
-      Future.delayed(const Duration(seconds: _interval), () {
-        searchStock(response.session, isbn, libIds);
-      });
+      return response;
     } on FormatException catch (error) {
       return Future.error(error);
     } on Exception catch (error) {
