@@ -15,18 +15,21 @@ class LibraryStockView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: StockList(),
+      home: StockList(isbn: isbn),
     );
   }
 }
 
 class StockList extends StatelessWidget {
+  const StockList({required this.isbn}) : super();
+  final String isbn;
+
   @override
   Widget build(BuildContext context) {
       final repository = LibraryStockRepository(LibraryStockApiClient());
       final libIdStore = LibIdStore();
       return ChangeNotifierProvider<LibraryStockViewModel>(
-        create: (_) => LibraryStockViewModel(repository, libIdStore, ''),
+        create: (_) => LibraryStockViewModel(repository, libIdStore, isbn),
         child: Consumer<LibraryStockViewModel>(
           builder: (context, model, child) =>
             Scaffold(

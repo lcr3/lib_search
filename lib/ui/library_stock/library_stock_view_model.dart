@@ -21,7 +21,7 @@ class LibraryStockViewModel extends ChangeNotifier {
     }
     isLoading = true;
 
-    final libIds = _libIdStore.get() as List<String>;
+    final libIds = await _libIdStore.get();
     try {
       final response = await _libraryStockRepository.searchStock(
           '',
@@ -29,16 +29,18 @@ class LibraryStockViewModel extends ChangeNotifier {
           libIds
       );
       if (response == null) {
+        print('レスポンスからだーーーー');
         return;
       }
       stockList = response.state;
+      print('こうしんすべ');
+      isLoading = false;
+      // 変更通知
+      notifyListeners();
     } on FormatException catch(error) {
       print('request error');
     } on Exception catch (error) {
       print('exception');
     }
-    isLoading = false;
-    // 変更通知
-    notifyListeners();
   }
 }
