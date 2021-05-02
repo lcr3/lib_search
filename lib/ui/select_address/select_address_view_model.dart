@@ -65,7 +65,7 @@ class SelectAddressViewModel extends ChangeNotifier {
   void _saveLibraries(List<Library> libraries) {
     // TODO: 抽象化
     final libIdStore = LibIdStore();
-    final libIds = libraries.map((library) => library.libId).toList();
+    final libIds = libraries.map((library) => library.systemId).toList();
     libIdStore.store(libIds);
   }
 }

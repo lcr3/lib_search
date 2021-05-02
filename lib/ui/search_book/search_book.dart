@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lib_search_app/network/entity/book.dart';
 import 'package:lib_search_app/network/search_book_api_client.dart';
 import 'package:lib_search_app/network/search_book_repository.dart';
+import 'package:lib_search_app/ui/library_stock/library_stock.dart';
 import 'package:lib_search_app/ui/search_book/search_book_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -123,6 +124,15 @@ class BookTile extends StatelessWidget {
             fontSize: 16,
           ),
         ),
+        onTap: () {
+          Navigator.push<MaterialPageRoute>(
+              context,
+              MaterialPageRoute(
+                  builder: (context) {
+                    return LibraryStockView(isbn: book.isbn);
+                  })
+          );
+        },
       ),
     );
   }

@@ -5,7 +5,7 @@ import 'package:lib_search_app/network/entity/library_stock_response.dart';
 class LibraryStockApiClient {
   final baseUrl = 'https://api.calil.jp/check?';
 
-  Future<LibraryListResponse> searchStockPauling(String session, String isbn, List<String> libIds) async {
+  Future<LibraryStockResponse> searchStockPauling(String session, String isbn, List<String> libIds) async {
     final libId = libIds.join(',');
     final url = _createRequestUri(session, isbn, libId);
     try {
@@ -16,7 +16,7 @@ class LibraryStockApiClient {
         throw const FormatException('network error');
       }
       final jsonMap = json.decode(response.body) as Map<String, dynamic>;
-      final list = LibraryListResponse.fromJson(jsonMap);
+      final list = LibraryStockResponse.fromJson(jsonMap);
       return list;
     } on Exception catch (e) {
       return Future.error(e);
