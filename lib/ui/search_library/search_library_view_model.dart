@@ -22,6 +22,7 @@ class SearchLibraryViewModel extends ChangeNotifier {
         libraries = libraryResponse;
         final libIds = libraries.map((library) => library.libId).toList();
         await _libIdStore.store(libIds);
+        await _libIdStore.saveList(libraries);
     } on FormatException catch(error) {
       print('request error');
     } on Exception catch (error) {
