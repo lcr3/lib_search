@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:lib_search_app/network/entity/library.dart';
 import 'package:lib_search_app/network/entity/library_state.dart';
 import 'package:lib_search_app/network/library_stock/library_stock_api_client.dart';
 import 'package:lib_search_app/network/library_stock/library_stock_repository.dart';
@@ -103,14 +104,26 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final libStore = LibIdStore();
     return Container(
       height: 60,
       color: color,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       alignment: Alignment.centerLeft,
-      child: Text(
-        title,
-        style: const TextStyle(color: Colors.white),
+      child: FutureBuilder(
+        future: libStore.getLibrary(title),
+        builder: (BuildContext context, AsyncSnapshot<Library?> snapshot) {
+          final String savedTitle;
+          if (snapshot.hasData && snapshot.data != null) {
+            savedTitle = snapshot.data!.formal;
+          } else {
+            savedTitle = title;
+          }
+          return Text(
+              savedTitle,
+              style: const TextStyle(color: Colors.white),
+          );
+        },
       ),
     );
   }
