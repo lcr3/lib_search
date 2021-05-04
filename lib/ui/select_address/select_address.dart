@@ -55,7 +55,7 @@ class MapView extends StatelessWidget {
                               zoom: 18,
                             ),
                             onMapCreated: _controller.complete,
-                            myLocationEnabled: false,
+                            myLocationEnabled: true,
                             myLocationButtonEnabled: false,
                           ),
                         ),
