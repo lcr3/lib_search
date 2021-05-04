@@ -10,35 +10,6 @@ import 'package:provider/provider.dart';
 
 import 'library_stock_view_model.dart';
 
-class LibraryStockList extends StatelessWidget {
-  const LibraryStockList({
-    Key? key,
-    required this.title,
-    required this.isLoading,
-    required this.slivers,
-  }) : super(key: key);
-
-  final String title;
-  final bool isLoading;
-  final List<Widget> slivers;
-
-  @override
-  Widget build(BuildContext context) {
-    return DefaultStickyHeaderController(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        body: isLoading ? const Center(
-          child: CircularProgressIndicator(),
-        ) : CustomScrollView(
-          slivers: slivers,
-        ),
-      ),
-    );
-  }
-}
-
 class StockList extends StatelessWidget {
   const StockList({required this.isbn}) : super();
   final String isbn;
@@ -50,14 +21,74 @@ class StockList extends StatelessWidget {
     return ChangeNotifierProvider<LibraryStockViewModel>(
       create: (_) => LibraryStockViewModel(repository, libIdStore, isbn),
       child: Consumer<LibraryStockViewModel>(
-          builder: (context, model, child) => LibraryStockList(
-            title: '検索結果',
-            isLoading: model.isLoading,
-            slivers: model.stockList.map((state) => _StockHeaderList(
-              title: state.name,
-              libraryState: state,
-            )).toList(),
+          builder: (context, model, child) => Scaffold(
+            appBar: AppBar(
+              title: const Text('検索結果'),
+            ),
+            body: LibraryStockList(
+              title: '検索結果',
+              isLoading: model.isLoading,
+              slivers: model.stockList.map((state) => _StockHeaderList(
+                title: state.name,
+                libraryState: state,
+              )).toList(),
+            ),
           )
+      ),
+    );
+  }
+}
+
+class LibraryStockList extends StatelessWidget {
+  const LibraryStockList({
+    Key? key,
+    required this.title,
+    required this.isLoading,
+    required this.slivers,
+  }) : super(key: key);
+
+  final String title;
+  final bool isLoading;
+  final List<_StockHeaderList> slivers;
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultStickyHeaderController(
+      child: Center(
+        // appBar: AppBar(
+        //   title: Text(title),
+        // ),
+        child: isLoading ? const Center(
+          child: CircularProgressIndicator(),
+        ) : _libraryScrollView(slivers)
+      ),
+    );
+  }
+
+  Widget _libraryScrollView(List<_StockHeaderList> slivers) {
+    var isEmpty = true;
+    for (final sliver in slivers) {
+      if (sliver.libraryState.references.isNotEmpty) {
+        isEmpty = false;
+        break;
+      }
+    }
+    if (isEmpty) {
+      return _emptyView();
+    }
+    return CustomScrollView(
+      slivers: slivers,
+    );
+  }
+
+  Widget _emptyView() {
+    return const Center(
+      child: Text(
+        'お探しの書籍を取り扱う図書館はありませんでした。',
+        style: TextStyle(
+          color: Colors.black54,
+          fontSize: 16,
+        ),
       ),
     );
   }
