@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'library_stock_list.dart';
@@ -10,6 +9,7 @@ class LibraryStockView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(primaryColor: Colors.white),
       home: StockList(isbn: isbn),
     );
   }

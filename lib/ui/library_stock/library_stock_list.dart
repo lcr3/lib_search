@@ -96,18 +96,16 @@ class Header extends StatelessWidget {
   const Header({
     Key? key,
     required this.title,
-    this.color = Colors.lightBlue,
   }) : super(key: key);
 
   final String title;
-  final Color color;
 
   @override
   Widget build(BuildContext context) {
     final libStore = LibIdStore();
     return Container(
-      height: 60,
-      color: color,
+      height: 30,
+      color: Colors.grey,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       alignment: Alignment.centerLeft,
       child: FutureBuilder(

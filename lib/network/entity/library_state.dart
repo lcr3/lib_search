@@ -1,5 +1,3 @@
-import 'package:lib_search_app/util/lib_id_store.dart';
-
 class LibraryState {
   LibraryState(this.name, this.reserveUrl, this.references);
 
