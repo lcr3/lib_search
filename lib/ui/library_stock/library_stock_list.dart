@@ -55,9 +55,6 @@ class LibraryStockList extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultStickyHeaderController(
       child: Center(
-        // appBar: AppBar(
-        //   title: Text(title),
-        // ),
         child: isLoading ? const Center(
           child: CircularProgressIndicator(),
         ) : _libraryScrollView(slivers)
