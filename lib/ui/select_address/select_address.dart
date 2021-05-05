@@ -29,7 +29,6 @@ class MapView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     final searchLibraryRepository = SearchLibraryRepository(
         SearchLibraryApiClient()
     );
@@ -40,58 +39,66 @@ class MapView extends StatelessWidget {
               appBar: AppBar(
                 title: const Text('現在地を指定'),
               ),
-              body: (model.currentLocation == null)
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : Stack(
-                      children: [
-                        Center(
-                          child: GoogleMap(
-                            mapType: MapType.hybrid,
-                            initialCameraPosition: CameraPosition(
-                              target: LatLng(model.currentLocation!.latitude!,
-                                  model.currentLocation!.longitude!),
-                              zoom: 18,
-                            ),
-                            onMapCreated: _controller.complete,
-                            myLocationEnabled: true,
-                            myLocationButtonEnabled: false,
-                          ),
-                        ),
-                        Align(
-                          alignment: const Alignment(0, 1),
-                          child: Container(
-                            margin: const EdgeInsets.only(
-                              bottom: 60,
-                              right: 16,
-                              left: 16,
-                            ),
-                            width: size.width,
-                            height: 44,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Theme.of(context).accentColor,
-                                onPrimary: Colors.white,
-                                textStyle: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                shape: const StadiumBorder(),
-                              ),
-                              onPressed: () async {
-                                final response = await model.selectAddress();
-                                if (response.result) {
-                                  await Navigator.of(context).pushReplacementNamed('/search_book');
-                                }
-                              },
-                              child: const Text('現在位置を設定'),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ))),
+              body: _googleMapView(model, context),
+          ),
+      ),
+    );
+  }
+
+  Widget _googleMapView(SelectAddressViewModel model, BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    if (model.currentLocation == null) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+    return Stack(
+      children: [
+        Center(
+          child: GoogleMap(
+            mapType: MapType.hybrid,
+            initialCameraPosition: CameraPosition(
+              target: LatLng(model.currentLocation!.latitude!,
+                  model.currentLocation!.longitude!),
+              zoom: 18,
+            ),
+            onMapCreated: _controller.complete,
+            myLocationEnabled: true,
+            myLocationButtonEnabled: false,
+          ),
+        ),
+        Align(
+          alignment: const Alignment(0, 1),
+          child: Container(
+            margin: const EdgeInsets.only(
+              bottom: 60,
+              right: 16,
+              left: 16,
+            ),
+            width: size.width,
+            height: 44,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Theme.of(context).accentColor,
+                onPrimary: Colors.white,
+                textStyle: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+                shape: const StadiumBorder(),
+              ),
+              onPressed: () async {
+                final response = await model.selectAddress();
+                if (response.result) {
+                  await Navigator.of(context).pushReplacementNamed('/search_book');
+                }
+              },
+              child: const Text('現在位置を設定'),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
