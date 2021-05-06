@@ -1,16 +1,15 @@
 # lib_search_app
 
-A new Flutter application.
+近くの図書館に目的の書籍が存在するか調べることができるアプリ
 
-## Getting Started
+## 使用API
+* [楽天ブックス書籍検索API](https://webservice.rakuten.co.jp/api/booksbooksearch/)
+* [カーリル図書館API](https://calil.jp/doc/api_ref.html)
 
-This project is a starting point for a Flutter application.
+## Screen Shots
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+|Android|iOS|
+|:-----:|:-:|
+|<img src='./images/android/1.png' width=300>|<img src='./images/ios/1.png' width=300>|
+|<img src='./images/android/2.png' width=300>|<img src='./images/ios/2.png' width=300>|
+|<img src='./images/android/3.png' width=300>|<img src='./images/ios/3.png' width=300>|
